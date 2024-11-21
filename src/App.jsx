@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { animated, useSpring } from '@react-spring/web'
 import Sign_in from "./components/Sign_in";
 import Sign_up from "./components/Sign_up";
 import User from "./components/user";
-import { Transition } from "react-transition-group";
 
 
 const App = () => {
@@ -23,6 +21,7 @@ const App = () => {
         <Route
           path="/User"
           element={<User />}/>
+        
 
         <Route path="*" element={<Navigate to="/Sign_in" />} />
       </Routes>
