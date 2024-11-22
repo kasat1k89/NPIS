@@ -3,14 +3,14 @@ import ProfileBtn from "./ProfileBtn";
 import './UpperMenu.css';
 import logo from '../assets/logo.png';
 
-const UpperMenu = ({ toggleSidebar }) => {
+const UpperMenu = ({ toggleSidebar, burgerRef }) => {
 
     return (
         <header className="header">
 
             <div className="logotype">
                 <div className="logo-menu">
-                    <i className='bx bx-menu toggle-btn' onClick={toggleSidebar}></i>
+                    <i className='bx bx-menu toggle-btn' ref={burgerRef} onClick={toggleSidebar}></i>
                 </div>
                 <img src={logo} alt="Logo" />
             </div>
@@ -18,7 +18,6 @@ const UpperMenu = ({ toggleSidebar }) => {
             <nav className="navbar">
 
                 <i className="bx bx-bell" style={{ color: "#ffffff", fontSize: "24px" }}></i>
-                
                 <ProfileBtn/>
             </nav>
         </header>

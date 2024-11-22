@@ -37,9 +37,14 @@
 .navbar {
     display: flex;
     align-items: center;
-    line-height: 38px;
     gap: 15px;
     margin-right: 17px;
+}
+
+@media (max-width: 440px) {
+    .navbar .small {
+        display: none;
+    }
 }
 
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Dropdown, Space, Avatar } from 'antd';
 import { Link } from "react-router-dom";
 
 const items = [
@@ -19,13 +19,16 @@ const items = [
 
 const ProfileBtn = () => {
     return (
+      <div>
         <Dropdown menu={{items,}} trigger={['click']}>
-            <a onClick={(e) => e.preventDefault()}>
-                <Space align="center">
-                    Люленов Евгений
-                </Space>
-            </a>
+        <a onClick={(e) => e.preventDefault()}>
+          <Space align="center">
+            <Avatar style={{ backgroundColor: '#87d068', alignItems: 'center'}} icon={<UserOutlined />} />
+            <div className="small">Люленов Евгений</div>
+          </Space>
+        </a>
         </Dropdown>
+      </div>
     );
 };
 
