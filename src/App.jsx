@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sign_in from "./components/Sign_in";
-import Sign_up from "./components/Sign_up";
 import User from "./components/user";
 
 
@@ -13,10 +12,6 @@ const App = () => {
         <Route 
           path="/Sign_in" 
           element={<Auth />} />
-
-        <Route 
-          path="/Sign_up" 
-          element={<Reg />} />
         
         <Route
           path="/User"
@@ -30,23 +25,13 @@ const App = () => {
 };
 
 const Auth = () => {
-  const navigate = useNavigate();
 
   return (
     <div>
-      <Sign_in onSwitch={() => navigate("/Sign_up")} />
+      <Sign_in />
     </div>
   );
 };
 
-const Reg = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div>
-      <Sign_up onSwitch={() => navigate("/Sign_in")} />
-    </div>
-  );
-};
 
 export default App;

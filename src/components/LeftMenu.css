@@ -1,91 +1,36 @@
+/* Основные стили для бокового меню */
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 60px;
     left: 0;
-    width: 65px;
+    width: 180px;
     height: 100%;
-    background: transparent;
-    backdrop-filter: blur(40px);
     border-right: 2px solid rgba(255, 255, 255, .2);
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    padding: 60px 10px 6px;
-    transition: .5s;
-    z-index: 5;
+    padding: 0 10px;
+    display: flex;
+    transition: width 0.4s ease;
+    transition: 0.4s;
+    flex-direction: column;
 }
 
-@media (max-width: 440px) {
-    .sidebar {
-        left: -100%;
-        transition: .3s;
-    }
-
-    .sidebar.active {
-        left: 0;
-    }
-
-    .sidebar.active .link-name {
-        transition-delay: .4s;
-    }
-}
-
-.sidebar.active {
-    width: 200px;
-
-}
-
-.sidebar .logo-menu {
-   display: flex;
-   align-items: center;
-   width: 100%;
-   height: 70px;
-}
-
-
-.sidebar .list {
-    margin-top: 10px;
+.sidebar.collapsed {
+    width: 65px; /* Сворачиваем меню */
+    padding: 0; /* Убираем отступы */
 }
 
 .list .list-item {
-    list-style: none;
-    width: 100%;
-    height: 45px;
-    margin: 5px 0;
-    line-height: 45px;
-}
-
-.list .list-item a {
     display: flex;
     align-items: center;
-    font-size: 18px;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    white-space: nowrap;
-    transition: .3s;
+    justify-content: flex-start;
+    margin: 10px 0;
 }
 
-.list .list-item.active a,
-.list .list-item a:hover {
-    background: rgba(255, 255, 255, .2);
+.sidebar.collapsed .list-item {
+    justify-content: center; /* Центрируем иконки */
 }
 
-.list .list-item a i {
-    min-width: 45px;
-    height: 45px;
-    text-align: center;
-    line-height: 45px;
+.list .list-item .text {
+    margin-left: 10px;
 }
 
-.sidebar .link-name {
-    opacity: 0;
-    font-size: 16px;
-    pointer-events: none;
-    transition: opacity .3s;
-}
 
-.sidebar.active .link-name {
-    opacity: 1;
-    font-size: 16px;
-    pointer-events: auto;
-    transition-delay: .2s;
-}

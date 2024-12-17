@@ -1,63 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { Button, Icon, Text } from '@gravity-ui/uikit';
+import { HomeIcon, AddIcon, SettingsIcon, ExitIcon } from "./Icons";
+import '../styles.css';
 import './LeftMenu.css';
 
-const LeftMenu = ({ isActive, sidebarRef }) => {
-    
+const LeftMenu = ({ isActive, isCollapsed, sidebarRef }) => {
     return (
-        <nav ref={sidebarRef} className={`sidebar ${isActive ? 'active' : ''}`}>
-
-        <ul className="list">
-            <li className="list-item active">
-                <a href="#">
-                    <i className='bx bx-user'></i>
-                    <span className="link-name" >Профиль</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a href="#">
-                    <i className='bx bx-grid-alt'></i>
-                    <span className="link-name" >Дашборд</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a>
-                    <i className='bx bx-grid-alt'></i>
-                    <span className="link-name" >Вкладка 3</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a href="#">
-                    <i className='bx bx-grid-alt'></i>
-                    <span className="link-name" >Вкладка 4</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a href="#">
-                    <i className='bx bx-grid-alt'></i>
-                    <span className="link-name" >Вкладка 5</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a href="#">
-                    <i className='bx bx-grid-alt'></i>
-                    <span className="link-name" >Вкладка 6</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <a href="#">
-                    <i className='bx bx-cog'></i>
-                    <span className="link-name" >Настройки</span>
-                </a>
-            </li>
-            <li className="list-item">
-                <Link to={"/"}>
-                    <i className='bx bx-power-off'></i>
-                    <span className="link-name" >Выход</span>
-                </Link>
-            </li>
-        </ul>
-    </nav>
+        <nav
+            ref={sidebarRef}
+            className={`sidebar ${isActive ? 'active' : ''} ${isCollapsed ? 'collapsed' : ''}`}
+        >
+            <ul className="list">
+                <li className="list-item">
+                    <Link to={"/User"}>
+                        <Button view="outlined" width="max" size="l" selected>
+                            <Icon data={HomeIcon} size={20} />
+                            {!isCollapsed && <Text variant="body-2" className="text">Главная</Text>}
+                        </Button>
+                    </Link>
+                </li>
+                <li className="list-item">
+                    <Link to={""}>
+                        <Button view="outlined" width="max" size="l">
+                            <Icon data={AddIcon} size={20} />
+                            {!isCollapsed && <Text variant="body-2" className="text">Создать ВМ</Text>}
+                        </Button>
+                    </Link>
+                </li>
+                <li className="list-item">
+                    <Link to={""}>
+                        <Button view="outlined" width="max" size="l">
+                            <Icon data={SettingsIcon} size={20} />
+                            {!isCollapsed && <Text variant="body-2" className="text">Настройки</Text>}
+                        </Button>
+                    </Link>
+                </li>
+                <li className="list-item">
+                    <Link to={"/"}>
+                        <Button view="outlined" width="max" size="l">
+                            <Icon data={ExitIcon} size={20} />
+                            {!isCollapsed && <Text variant="body-2" className="text">Выход</Text>}
+                        </Button>
+                    </Link>
+                </li>
+            </ul>
+        </nav>
     );
 };
 

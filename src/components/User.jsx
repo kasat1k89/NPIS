@@ -3,27 +3,30 @@ import './User.css';
 import UpperMenu from "./UpperMenu";
 import LeftMenu from "./LeftMenu";
 
-
 const User = () => {
-
     const [isActive, setIsActive] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(false); // Состояние для сворачивания
     const sidebarRef = useRef(null);
-    const burgerRef = useRef(null); // Отслеживаем кнопку "бургера"
-  
+    const burgerRef = useRef(null);
+
     const toggleSidebar = (event) => {
         event.stopPropagation();
         setIsActive((prevState) => !prevState);
-};
+        setIsCollapsed((prevState) => !prevState); // Переключаем сворачивание
+    };
 
     const handleClickOutside = (event) => {
-    // Если клик произошел вне бокового меню
-        if (window.innerWidth <= 768 && sidebarRef.current &&
+        if (
+            window.innerWidth <= 768 &&
+            sidebarRef.current &&
             !sidebarRef.current.contains(event.target) &&
             burgerRef.current &&
-            !burgerRef.current.contains(event.target)) {
-      setIsActive(false);
-    }
-};
+            !burgerRef.current.contains(event.target)
+        ) {
+            setIsActive(false);
+            setIsCollapsed(false); // Сбрасываем сворачивание
+        }
+    };
 
     useEffect(() => {
         document.title = "Главная";
@@ -32,14 +35,13 @@ const User = () => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-      }, []);
+    }, []);
 
     return (
         <>
-        <UpperMenu burgerRef={burgerRef} toggleSidebar={toggleSidebar}/>
-        <LeftMenu sidebarRef={sidebarRef} isActive={isActive}/>
+            <UpperMenu burgerRef={burgerRef} toggleSidebar={toggleSidebar} />
+            <LeftMenu sidebarRef={sidebarRef} isActive={isActive} isCollapsed={isCollapsed} />
         </>
-        
     );
 };
 
