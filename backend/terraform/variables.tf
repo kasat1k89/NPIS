@@ -47,3 +47,39 @@ variable "username" {
   type = string
   default = "admin@zvirt@internal"
 }
+
+variable "format_disk" {
+  description = "Формат Диска"
+  type = string
+  default = "raw"  
+}
+
+variable "sparce_var" {
+  description = "Разъем диска"
+  type = bool
+  default = true
+}
+
+variable "storage_domain_id" {
+  description = "Id хранилища дисков"
+  type = string
+  default = "e80573eb-21b0-4b37-bdae-bfb5b1a8d8d6"
+}
+
+variable "disk_interface_var" {
+  description = "Интерфейс диска"
+  type = string
+  default = "virtio_scsi"
+}
+
+variable "bootable_var" {
+  description = "Запускаемый диск"
+  type = bool
+  default = true
+}
+
+variable "active_disk_var" {
+  description = "Активный ли диск"
+  type = bool
+  default = true
+}

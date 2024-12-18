@@ -28,17 +28,26 @@ resource "ovirt_vm" "vm" {
   cluster_id  = "7bae0bcc-9fa4-11ef-ab31-00163e4da590"
   template_id = "00000000-0000-0000-0000-000000000000"
   memory      = var.memory_gb * 1024 * 1024 * 1024
-  cpu_cores       = var.cpu_cores
-  cpu_sockets     = 1
+  cpu_cores   = var.cpu_cores
+  cpu_sockets = 1
+  cpu_threads = 1
   clone       = true
 }
 
-#Загрузка iso образов в дисковое хранилище
+# Создание нового диска
+resource "ovirt_disk" "disk" {
+  alias             = "${var.name}-disk"
+  size              = var.disk_size_gb * 1024 * 1024 * 1024
+  format            = var.format_disk
+  storage_domain_id = var.storage_domain_id
+  sparse            = var.sparce_var
+}
 
-#resource "ovirt_disk_from_image" "test" {
-#  storage_domain_id = "e80573eb-21b0-4b37-bdae-bfb5b1a8d8d6"
-#  format           = "raw"
-#  alias            = "iso_deb_12"
-#  sparse           = true
-#  source_file      = "D:\\ISO\\debian-12.2.0-amd64-netinst.iso"
-#}
+# Присоединение диска к ВМ
+resource "ovirt_disk_attachment" "disk_attachment" {
+  vm_id       = ovirt_vm.vm.id
+  disk_id     = ovirt_disk.disk.id
+  disk_interface   = var.disk_interface_var
+  bootable    = var.bootable_var
+  active      = var.active_disk_var
+}
