@@ -24,8 +24,13 @@ def run_terraform(config: dict):
             print("Terraform Apply успешно завершён.")
             print(stdout)
 
-            # Автоматическое удаление ресурса из состояния
-            remove_state("ovirt_vm.vm")
+            # Автоматическое удаление ресурсов из состояния
+            resources_to_remove = [
+                "ovirt_disk.disk",
+                "ovirt_disk_attachment.disk_attachment",
+                "ovirt_vm.vm"
+            ]
+            remove_state(resources_to_remove)
             return stdout
         else:
             print("Ошибка при запуске Terraform Apply:")
@@ -36,23 +41,20 @@ def run_terraform(config: dict):
         print(f"Ошибка Terraform: {e}")
         raise e
 
-def remove_state(resource_name: str):
-    """Удаление ресурса из состояния Terraform."""
+def remove_state(resource_names: list):
+    """Удаление нескольких ресурсов из состояния Terraform."""
     try:
         tf = Terraform(working_dir=TERRAFORM_DIR)
 
-        print(f"Удаление ресурса {resource_name} из состояния Terraform...")
-        return_code, stdout, stderr = tf.cmd("state", "rm", resource_name)
+        for resource_name in resource_names:
+            print(f"Удаление ресурса {resource_name} из состояния Terraform...")
+            return_code, stdout, stderr = tf.cmd("state", "rm", resource_name)
 
-        if return_code == 0:
-            print(f"Ресурс {resource_name} успешно удалён из состояния.")
-            print(stdout)
-            return stdout
-        else:
-            print(f"Ошибка при удалении ресурса {resource_name} из состояния:")
-            print(stderr)
-            raise RuntimeError(stderr)
-
+            if return_code == 0:
+                print(f"Ресурс {resource_name} успешно удалён из состояния.")
+            else:
+                print(f"Ошибка при удалении ресурса {resource_name} из состояния:")
+                print(stderr)
     except Exception as e:
         print(f"Ошибка при выполнении команды state rm: {e}")
         raise e
