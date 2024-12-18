@@ -3,16 +3,23 @@ import './User.css';
 import UpperMenu from "./UpperMenu";
 import LeftMenu from "./LeftMenu";
 
+// Импортируем компоненты для рендеринга
+import Home from "./Home";
+import Create from "./Create";
+import Settings from "./Settings";
+
 const User = () => {
     const [isActive, setIsActive] = useState(false);
-    const [isCollapsed, setIsCollapsed] = useState(false); // Состояние для сворачивания
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [selectedComponent, setSelectedComponent] = useState("home"); // Текущий компонент
+
     const sidebarRef = useRef(null);
     const burgerRef = useRef(null);
 
     const toggleSidebar = (event) => {
         event.stopPropagation();
         setIsActive((prevState) => !prevState);
-        setIsCollapsed((prevState) => !prevState); // Переключаем сворачивание
+        setIsCollapsed((prevState) => !prevState);
     };
 
     const handleClickOutside = (event) => {
@@ -24,14 +31,13 @@ const User = () => {
             !burgerRef.current.contains(event.target)
         ) {
             setIsActive(false);
-            setIsCollapsed(false); // Сбрасываем сворачивание
+            setIsCollapsed(false);
         }
     };
 
     useEffect(() => {
         document.title = "Главная";
         document.addEventListener("mousedown", handleClickOutside);
-
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
@@ -39,8 +45,24 @@ const User = () => {
 
     return (
         <>
+            {/* Верхнее меню */}
             <UpperMenu burgerRef={burgerRef} toggleSidebar={toggleSidebar} />
-            <LeftMenu sidebarRef={sidebarRef} isActive={isActive} isCollapsed={isCollapsed} />
+
+            {/* Левое меню */}
+            <LeftMenu
+                sidebarRef={sidebarRef}
+                isActive={isActive}
+                isCollapsed={isCollapsed}
+                selectedComponent={selectedComponent}
+                onMenuClick={setSelectedComponent} // Обновляем текущий компонент
+            />
+
+            {/* Основная область рендеринга */}
+            <div className="content">
+                {selectedComponent === "home" && <Home />}
+                {selectedComponent === "create" && <Create />}
+                {selectedComponent === "settings" && <Settings />}
+            </div>
         </>
     );
 };

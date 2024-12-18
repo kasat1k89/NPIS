@@ -1,15 +1,15 @@
 /* Основные стили для бокового меню */
 .sidebar {
     position: fixed;
-    top: 60px;
+    top: 52px;
     left: 0;
     width: 180px;
     height: 100%;
-    border-right: 2px solid rgba(255, 255, 255, .2);
+    border-right: 2px solid var(--g-color-line-generic);
     padding: 0 10px;
     display: flex;
-    transition: width 0.4s ease;
-    transition: 0.4s;
+    transition: width 0.3s ease;
+    transition: 0.3s;
     flex-direction: column;
 }
 
@@ -21,16 +21,18 @@
 .list .list-item {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: left;
     margin: 10px 0;
 }
 
 .sidebar.collapsed .list-item {
     justify-content: center; /* Центрируем иконки */
+    margin: 10px 12px;
 }
 
 .list .list-item .text {
     margin-left: 10px;
 }
+
 
 

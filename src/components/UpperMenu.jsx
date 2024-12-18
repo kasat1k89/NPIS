@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ProfileBtn from "./ProfileBtn";
 import './UpperMenu.css';
-import logo from '../assets/logo.png';
+import { Icon, Text } from '@gravity-ui/uikit';
+import { BurgerIcon, BellIcon } from "./Icons";
 
 const UpperMenu = ({ toggleSidebar, burgerRef }) => {
 
@@ -10,14 +11,16 @@ const UpperMenu = ({ toggleSidebar, burgerRef }) => {
 
             <div className="logotype">
                 <div className="logo-menu">
-                    <i className='bx bx-menu toggle-btn' ref={burgerRef} onClick={toggleSidebar}></i>
+                    <div className="toggle-btn" ref={burgerRef} onClick={toggleSidebar}>
+                        <Icon data={BurgerIcon} size={20} />
+                    </div>
                 </div>
-                <img src={logo} alt="Logo" />
+                <Text variant="header-2">Киберполигон</Text>
             </div>
             
             <nav className="navbar">
 
-                <i className="bx bx-bell" style={{ color: "#ffffff", fontSize: "24px" }}></i>
+                <Icon data={BellIcon} size={20} />
                 <ProfileBtn/>
             </nav>
         </header>

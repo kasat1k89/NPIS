@@ -1,11 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Icon, Text } from '@gravity-ui/uikit';
+import { useNavigate } from "react-router-dom";
+import { Button, Icon, Text, Tooltip } from '@gravity-ui/uikit';
 import { HomeIcon, AddIcon, SettingsIcon, ExitIcon } from "./Icons";
 import '../styles.css';
 import './LeftMenu.css';
 
-const LeftMenu = ({ isActive, isCollapsed, sidebarRef }) => {
+const LeftMenu = ({ isActive, isCollapsed, sidebarRef, selectedComponent, onMenuClick }) => {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        onMenuClick("exit");
+        navigate("/Sign_in");
+    };
+
     return (
         <nav
             ref={sidebarRef}
@@ -13,36 +21,61 @@ const LeftMenu = ({ isActive, isCollapsed, sidebarRef }) => {
         >
             <ul className="list">
                 <li className="list-item">
-                    <Link to={"/User"}>
-                        <Button view="outlined" width="max" size="l" selected>
-                            <Icon data={HomeIcon} size={20} />
-                            {!isCollapsed && <Text variant="body-2" className="text">Главная</Text>}
-                        </Button>
-                    </Link>
+                    <Tooltip content="Главная" placement={"right"} openDelay={300}>
+                    <Button
+                        view="outlined"
+                        width="max"
+                        size="l"
+                        selected={selectedComponent === "home"}
+                        onClick={() => onMenuClick("home")}
+                    >
+                        <Icon data={HomeIcon} size={20} />
+                        {!isCollapsed && <Text variant="body-2">Главная</Text>}
+                    </Button>
+                    </Tooltip>
+                    
                 </li>
                 <li className="list-item">
-                    <Link to={""}>
-                        <Button view="outlined" width="max" size="l">
-                            <Icon data={AddIcon} size={20} />
-                            {!isCollapsed && <Text variant="body-2" className="text">Создать ВМ</Text>}
-                        </Button>
-                    </Link>
+                    <Tooltip content="Создать ВМ" placement={"right"} openDelay={300}>
+                    <Button
+                        view="outlined"
+                        width="max"
+                        size="l"
+                        selected={selectedComponent === "create"}
+                        onClick={() => onMenuClick("create")}
+                    >
+                        <Icon data={AddIcon} size={20} />
+                        {!isCollapsed && <Text variant="body-2">Создать ВМ</Text>}
+                    </Button>
+                    </Tooltip>
                 </li>
                 <li className="list-item">
-                    <Link to={""}>
-                        <Button view="outlined" width="max" size="l">
-                            <Icon data={SettingsIcon} size={20} />
-                            {!isCollapsed && <Text variant="body-2" className="text">Настройки</Text>}
-                        </Button>
-                    </Link>
+                    <Tooltip content="Настройки" placement={"right"} openDelay={300}>
+                    <Button
+                        view="outlined"
+                        width="max"
+                        size="l"
+                        selected={selectedComponent === "settings"}
+                        onClick={() => onMenuClick("settings")}
+                    >
+                        <Icon data={SettingsIcon} size={20} />
+                        {!isCollapsed && <Text variant="body-2">Настройки</Text>}
+                    </Button>
+                    </Tooltip>
                 </li>
                 <li className="list-item">
-                    <Link to={"/"}>
-                        <Button view="outlined" width="max" size="l">
-                            <Icon data={ExitIcon} size={20} />
-                            {!isCollapsed && <Text variant="body-2" className="text">Выход</Text>}
-                        </Button>
-                    </Link>
+                    <Tooltip content="Выход" placement={"right"} openDelay={300}>
+                    <Button
+                        view="outlined"
+                        width="max"
+                        size="l"
+                        selected={selectedComponent === "exit"}
+                        onClick={handleLogout}
+                    >
+                        <Icon data={ExitIcon} size={20} />
+                        {!isCollapsed && <Text variant="body-2">Выход</Text>}
+                    </Button>
+                    </Tooltip>
                 </li>
             </ul>
         </nav>

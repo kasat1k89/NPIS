@@ -36,6 +36,7 @@
         --g-color-private-brand-150-solid: rgb(233,244,226);
         --g-color-private-brand-100-solid: rgb(239,247,233);
         --g-color-private-brand-50-solid: rgb(244,250,241);
+        --g-color-line-generic: rgba(46, 44, 44, 0.2);
         
         
         --g-color-base-brand: #93C86F;
@@ -88,6 +89,7 @@
         --g-color-private-brand-150-solid: rgb(57,63,49);
         --g-color-private-brand-100-solid: rgb(51,55,46);
         --g-color-private-brand-50-solid: rgb(45,46,42);
+        --g-color-line-generic: rgba(255, 255, 255, .2);
         
         
         --g-color-base-brand: #93C86F;

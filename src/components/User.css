@@ -1,11 +1,22 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+
+.content {
+    margin-left: 250px; /* Начальный отступ, равный ширине свернутого меню */
+    padding: 20px;
+    margin-top: 80px;
+    transition: margin-left 0.3s ease; /* Плавное изменение отступа */
 }
 
-body {
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
+/* Отступ контента при развернутом меню */
+.sidebar.active ~ .content {
+    margin-left: 135px; /* Положительный отступ при развернутом меню */
+    padding: 20px;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 45%;
 }
