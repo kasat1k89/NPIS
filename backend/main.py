@@ -21,6 +21,7 @@ class VMConfig(BaseModel):
     memory_gb: int
     os_type: Optional[str] = None
     disk_size_gb: Optional[int] = None  # Необязательный параметр
+    template_id: str
 
 @app.post("/create_vm/")
 async def create_vm(config: VMConfig):

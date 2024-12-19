@@ -83,3 +83,14 @@ variable "active_disk_var" {
   type = bool
   default = true
 }
+
+variable "template_id" {
+  description = "ID клонируемого шаблона"
+  type = string
+}
+
+variable "cluster_id" {
+  description = "ID кластера"
+  type = string
+  default = "7bae0bcc-9fa4-11ef-ab31-00163e4da590"
+}

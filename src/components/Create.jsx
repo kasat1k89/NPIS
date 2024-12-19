@@ -9,19 +9,34 @@ const Create = () => {
     const [storage, setStorage] = useState("");
     const [osType, setOsType] = useState("");
 
+    // Маппинг типов ОС и их шаблонов
+    const osConfigs = {
+        "Ubuntu Server": { template_id: "0eb828b6-3b41-4f12-9e72-54c3fd38c1c4" },
+        "Windows 10": { template_id: "5a9c53bb-64f8-4af9-9a07-219ba122b69d" },
+        "Debian 12": { template_id: "f1fc5e82-9037-434b-a656-ac04df2d0862" },
+        "Astra": { template_id: "37192d29-f296-4ee4-a0b9-004463d95c2a" },
+        "Windows Server": {template_id: "c0f0181d-8ba4-44a4-9f3b-a5f91bfb52b9"},
+        "Blank": {template_id: "00000000-0000-0000-0000-000000000000"},
+    };
+
     const handleCreateVM = async () => {
+        // Проверяем, существует ли выбранный тип ОС в маппинге
+        const osConfig = osConfigs[osType];
+        if (!osConfig || !osConfig.template_id) {
+            alert("Выберите корректный тип ОС!");
+            return;
+        }
+
         // Формируем данные для отправки
         const requestData = {
             name,
             cpu_cores: parseInt(cpuCores) || 0,
             memory_gb: parseInt(memory) || 0,
+            disk_size_gb: storage ? parseInt(storage) : undefined,
+            template_id: osConfig.template_id, // Передаём только template_id
         };
 
-        // Добавляем параметры, если они заполнены
-        if (storage) requestData.disk_size_gb = parseInt(storage);
-        if (osType) requestData.os_type = osType;
-
-        console.log("Отправляемые данные:", requestData); // Логируем для отладки
+        console.log("Отправляемые данные:", requestData);
 
         try {
             const response = await fetch("http://localhost:8000/create_vm/", {
@@ -64,14 +79,17 @@ const Create = () => {
                 <Text variant="body-2">Операционная система</Text>
                 <Select
                     size="m"
-                    placeholder="Выбери из списка (необязательно)"
+                    placeholder="Выберите ОС"
                     width={300}
-                    onChange={(value) => setOsType(value)}
+                    value={osType} // Указываем текущее значение
+                    onUpdate={(value) => setOsType(value)} // Устанавливаем значение в osType
                 >
-                    <Select.Option value="ubuntu">Ubuntu</Select.Option>
-                    <Select.Option value="windows">Windows 10</Select.Option>
-                    <Select.Option value="debian">Debian</Select.Option>
-                    <Select.Option value="astra">Astra</Select.Option>
+                    <Select.Option value="Ubuntu Server">Ubuntu Server</Select.Option>
+                    <Select.Option value="Windows 10">Windows 10</Select.Option>
+                    <Select.Option value="Debian 12">Debian 12</Select.Option>
+                    <Select.Option value="Astra">Astra</Select.Option>
+                    <Select.Option value="Windows Server">Windows Server</Select.Option>
+                    <Select.Option value="Blank">Пустая ВМ</Select.Option>
                 </Select>
             </div>
 

@@ -23,10 +23,11 @@ provider "ovirt" {
 
 #Создание пустой ВМ из шаблона Blank
 
+
 resource "ovirt_vm" "vm" {
   name        = var.name
-  cluster_id  = "7bae0bcc-9fa4-11ef-ab31-00163e4da590"
-  template_id = "00000000-0000-0000-0000-000000000000"
+  cluster_id  = var.cluster_id
+  template_id = var.template_id
   memory      = var.memory_gb * 1024 * 1024 * 1024
   cpu_cores   = var.cpu_cores
   cpu_sockets = 1
@@ -36,6 +37,7 @@ resource "ovirt_vm" "vm" {
 
 # Создание нового диска
 resource "ovirt_disk" "disk" {
+  count = var.template_id == "00000000-0000-0000-0000-000000000000" ? 1 : 0
   alias             = "${var.name}-disk"
   size              = var.disk_size_gb * 1024 * 1024 * 1024
   format            = var.format_disk
@@ -45,8 +47,9 @@ resource "ovirt_disk" "disk" {
 
 # Присоединение диска к ВМ
 resource "ovirt_disk_attachment" "disk_attachment" {
+  count = var.template_id == "00000000-0000-0000-0000-000000000000" ? 1 : 0
   vm_id       = ovirt_vm.vm.id
-  disk_id     = ovirt_disk.disk.id
+  disk_id     = ovirt_disk.disk[count.index].id
   disk_interface   = var.disk_interface_var
   bootable    = var.bootable_var
   active      = var.active_disk_var

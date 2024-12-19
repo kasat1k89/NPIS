@@ -1,4 +1,3 @@
-import time
 from python_terraform import Terraform
 
 TERRAFORM_DIR = "./terraform"
@@ -11,8 +10,7 @@ def run_terraform(config: dict):
         tf.init()
 
         # Генерация уникального имени
-        timestamp = int(time.time())
-        vm_name = f"{config['name']}-{timestamp}"
+        vm_name = f"{config['name']}"
         config["name"] = vm_name
 
         print(f"Запуск Terraform Apply для ВМ {vm_name}...")
