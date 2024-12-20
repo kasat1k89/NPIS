@@ -94,3 +94,9 @@
     align-items: center;
     padding-top: 30px;
 }
+
+.buttons {
+    display: flex;
+    padding-left: 23px;
+    gap: 15px;
+}

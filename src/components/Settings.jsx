@@ -10,7 +10,7 @@ const Settings = () => {
 
     return (
         <div className="create">
-            <Text variant="header-2">Тут будут настройки</Text>
+            <Text variant="display-1">Тут будут настройки</Text>
         </div>
     )
 }

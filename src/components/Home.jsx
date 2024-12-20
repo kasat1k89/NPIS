@@ -30,7 +30,7 @@ const Home = () => {
 
     return (
         <div className="home">
-            <Text variant="header-2">Виртуальные машины</Text>
+            <Text variant="display-1">Виртуальные машины</Text>
 
             <div className="card-container">
                 {machines.map((machine, index) => (
@@ -63,18 +63,28 @@ const Home = () => {
                                             {isTurnedOn[index] ? "Включена" : "Выключена"}
                                         </Text>
                                     </Text>
-                                </div>
+                                </div>                       
+                            </div>
+                            <div className="buttons">
                                 <Button
                                     onClick={() => {
                                         setOpen(true);
                                         setCurrentMachine(index);
                                     }}
                                     className="card-edit"
-                                    view="action"
+                                    view="outlined"
                                     width="max"
                                     size="l"
                                 >
                                     <Text variant="body-2">Управление</Text>
+                                </Button>
+                                <Button
+                                    className="card-edit"
+                                    view="outlined"
+                                    width="max"
+                                    size="l"
+                                >
+                                    <Text variant="body-2">Консоль</Text>
                                 </Button>
                             </div>
                         </Card>
