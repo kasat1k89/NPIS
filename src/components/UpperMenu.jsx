@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import ProfileBtn from "./ProfileBtn";
+import React from 'react';
+import ProfileBtn from './ProfileBtn';
+import ThemeSwitcher from './ThemeSwitcher';
 import './UpperMenu.css';
 import { Icon, Text } from '@gravity-ui/uikit';
-import { BurgerIcon, BellIcon } from "./Icons";
+import { BurgerIcon, BellIcon } from './Icons';
 
-const UpperMenu = ({ toggleSidebar, burgerRef }) => {
-
+const UpperMenu = ({ toggleSidebar, burgerRef, toggleTheme, theme }) => {
     return (
         <header className="header">
-
             <div className="logotype">
                 <div className="logo-menu">
                     <div className="toggle-btn" ref={burgerRef} onClick={toggleSidebar}>
@@ -17,11 +16,11 @@ const UpperMenu = ({ toggleSidebar, burgerRef }) => {
                 </div>
                 <Text variant="header-2">Киберполигон</Text>
             </div>
-            
-            <nav className="navbar">
 
+            <nav className="navbar">
                 <Icon data={BellIcon} size={20} />
-                <ProfileBtn/>
+                <ProfileBtn />
+                <ThemeSwitcher className="theme" theme={theme} toggleTheme={toggleTheme} />
             </nav>
         </header>
     );

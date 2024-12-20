@@ -16,6 +16,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: transparent;
+    backdrop-filter: blur(20px);
     border-bottom: 2px solid var(--g-color-line-generic);
     z-index: 10;
 }
@@ -37,7 +39,12 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+}
 
+.theme {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 440px) {

@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sign_in from "./components/Sign_in";
 import User from "./components/user";
 
-
-const App = () => {
-
+const App = ({ theme, toggleTheme }) => {
   return (
     <Router>
       <Routes>
@@ -15,9 +13,8 @@ const App = () => {
         
         <Route
           path="/User"
-          element={<User />}/>
+          element={<User theme={theme} toggleTheme={toggleTheme} />} />
         
-
         <Route path="*" element={<Navigate to="/Sign_in" />} />
       </Routes>
     </Router>
@@ -25,13 +22,11 @@ const App = () => {
 };
 
 const Auth = () => {
-
   return (
     <div>
       <Sign_in />
     </div>
   );
 };
-
 
 export default App;

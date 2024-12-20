@@ -8,7 +8,7 @@ import Home from "./Home";
 import Create from "./Create";
 import Settings from "./Settings";
 
-const User = () => {
+const User = ({ theme, toggleTheme }) => {
     const [isActive, setIsActive] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selectedComponent, setSelectedComponent] = useState("home"); // Текущий компонент
@@ -46,7 +46,7 @@ const User = () => {
     return (
         <>
             {/* Верхнее меню */}
-            <UpperMenu burgerRef={burgerRef} toggleSidebar={toggleSidebar} />
+            <UpperMenu burgerRef={burgerRef} toggleSidebar={toggleSidebar} theme={theme} toggleTheme={toggleTheme} />
 
             {/* Левое меню */}
             <LeftMenu

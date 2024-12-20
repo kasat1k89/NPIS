@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {TextInput, Text} from '@gravity-ui/uikit';
+import {Text} from '@gravity-ui/uikit';
 import './User.css';
 
 const Settings = () => {

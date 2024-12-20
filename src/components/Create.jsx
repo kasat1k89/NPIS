@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, Text, Button, Select } from "@gravity-ui/uikit";
 import "./User.css";
 
 const Create = () => {
+
+    useEffect(() => {
+            document.title = "Создание виртуальной машины";
+        }, []);
+
     const [name, setName] = useState("");
     const [cpuCores, setCpuCores] = useState("");
     const [memory, setMemory] = useState("");
@@ -11,11 +16,11 @@ const Create = () => {
 
     // Маппинг типов ОС и их шаблонов
     const osConfigs = {
-        "Ubuntu Server": { template_id: "0eb828b6-3b41-4f12-9e72-54c3fd38c1c4" },
-        "Windows 10": { template_id: "5a9c53bb-64f8-4af9-9a07-219ba122b69d" },
-        "Debian 12": { template_id: "f1fc5e82-9037-434b-a656-ac04df2d0862" },
-        "Astra": { template_id: "37192d29-f296-4ee4-a0b9-004463d95c2a" },
-        "Windows Server": {template_id: "c0f0181d-8ba4-44a4-9f3b-a5f91bfb52b9"},
+        "Ubuntu Server": { template_id: "31f5b1f2-5d26-4de6-80a4-53f9477a428a" },
+        "Windows 10": { template_id: "354e5d36-b733-4ca8-a385-5b1d655ea407" },
+        "Debian 12": { template_id: "3b749f0a-2781-4eb4-82ec-2d4b5e8f1655" },
+        "Astra": { template_id: "3b749f0a-2781-4eb4-82ec-2d4b5e8f1655" },
+        "Windows Server": {template_id: "f77b7ea6-f51f-4cb9-89e5-7230ff7c1ab3"},
         "Blank": {template_id: "00000000-0000-0000-0000-000000000000"},
     };
 
