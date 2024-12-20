@@ -1,124 +1,128 @@
 import React, { useEffect, useState } from "react";
-import { Text, Card, Button, Modal, Select, Icon } from '@gravity-ui/uikit';
+import { Text, Card, Modal, Button, Icon } from '@gravity-ui/uikit';
 import { WindowsIcon, UbuntuIcon, DebianIcon, AstraIcon } from "./Icons";
 import './User.css';
 
 const Home = () => {
-    useEffect(() => {
-        document.title = "Главная";
-    }, []);
+    const [vms, setVms] = useState([]); // Список виртуальных машин
+    const [open, setOpen] = useState(false); // Состояние модального окна
+    const [currentMachine, setCurrentMachine] = useState(null); // Текущая ВМ для управления
+    const [loading, setLoading] = useState(false); // Индикатор загрузки данных
 
-    const [open, setOpen] = useState(false);
-    const [isTurnedOn, setIsTurnedOn] = useState([true, true, true, true, true]);
-    const [currentMachine, setCurrentMachine] = useState(null);
+    // Загрузка данных о виртуальных машинах
+    const fetchVMs = async () => {
+        try {
+            setLoading(true);
 
-    const machines = [
-        { id: 1, name: "Windows Server", os: "Windows", cpu: "4 ядра", ram: "12 ГБ", disk: "50 ГБ" },
-        { id: 2, name: "Debian 12", os: "Linux", cpu: "2 ядра", ram: "8 ГБ", disk: "20 ГБ" },
-        { id: 3, name: "Ubuntu Server", os: "Linux", cpu: "8 ядер", ram: "16 ГБ", disk: "100 ГБ" },
-        { id: 4, name: "Windows 10", os: "Windows", cpu: "4 ядра", ram: "16 ГБ", disk: "50 ГБ" },
-        { id: 5, name: "Astra", os: "Linux", cpu: "6 ядер", ram: "12 ГБ", disk: "75 ГБ" },
-    ];
+            // Получение данных из /vms/raw
+            const rawResponse = await fetch("http://localhost:8000/vms/raw/");
+            if (!rawResponse.ok) {
+                throw new Error(`Ошибка загрузки из /vms/raw: ${rawResponse.statusText}`);
+            }
+            const rawData = await rawResponse.json();
+            console.log("Данные из /vms/raw:", rawData);
+            setVms(rawData);
 
-    const handleToggle = (index) => {
-        setIsTurnedOn((prevState) => {
-            const newState = [...prevState];
-            newState[index] = !newState[index];
-            return newState;
-        });
+            // Обновление данных через /vms
+            const updatedResponse = await fetch("http://localhost:8000/vms/");
+            if (!updatedResponse.ok) {
+                throw new Error(`Ошибка обновления из /vms: ${updatedResponse.statusText}`);
+            }
+            const updatedData = await updatedResponse.json();
+            console.log("Обновленные данные из /vms:", updatedData);
+            setVms(updatedData); // Обновляем состояние
+        } catch (error) {
+            console.error("Ошибка при загрузке данных ВМ:", error);
+        } finally {
+            setLoading(false);
+        }
     };
+
+    // Вызываем fetchVMs при первом рендере
+    useEffect(() => {
+        document.title = "Главная"; // Устанавливаем заголовок страницы
+        fetchVMs(); // Загружаем данные
+    }, []);
 
     return (
         <div className="home">
             <Text variant="header-2">Виртуальные машины</Text>
 
-            <div className="card-container">
-                {machines.map((machine, index) => (
-                    <div key={machine.id} className="card">
-                        <Card className="card-box" view="raised" type="container" size="l">
-                            <div className="card-image">
-                                <Icon data={
-                                    machine.os === 'Windows'
-                                    ? WindowsIcon
-                                    : machine.name.includes('Ubuntu')
-                                    ? UbuntuIcon
-                                    : machine.name.includes('Debian')
-                                    ? DebianIcon
-                                    : AstraIcon
-                                }/>
-                            </div>                          
-                            <div className="card-text">
-                                <Text variant="header-1">{machine.name}</Text>
-                                <div className="card-params">
-                                    <Text variant="body-1">Операционная система: {machine.os}</Text>
-                                    <Text variant="body-1">Процессор: {machine.cpu}</Text>
-                                    <Text variant="body-1">Оперативная память: {machine.ram}</Text>
-                                    <Text variant="body-1">Размер диска: {machine.disk}</Text>
-                                    <Text variant="body-1">
-                                        Состояние:&nbsp;
-                                        <Text
-                                            variant="body-1"
-                                            color={isTurnedOn[index] ? "positive" : "danger"}
+            {loading ? (
+                <Text variant="body-1">Загрузка данных...</Text>
+            ) : (
+                <div className="card-container">
+                    {vms.length === 0 ? (
+                        <Text variant="body-1">Нет доступных виртуальных машин.</Text>
+                    ) : (
+                        vms.map((vm) => (
+                            <div key={vm.id} className="card">
+                                <Card className="card-box" view="raised" type="container" size="l">
+                                    <div className="card-image">
+                                        <Icon data={
+                                            vm.os_type.includes('windows') ? WindowsIcon :
+                                            vm.os_type.includes('ubuntu') ? UbuntuIcon :
+                                            vm.os_type.includes('debian') ? DebianIcon :
+                                            AstraIcon
+                                        }/>
+                                    </div>
+                                    <div className="card-text">
+                                        <Text variant="header-1">{vm.name}</Text> {/* Имя ВМ */}
+                                        <div className="card-params">
+                                            <Text variant="body-1">ID: {vm.id}</Text> {/* ID ВМ */}
+                                            <Text variant="body-1">Операционная система: {vm.os_type}</Text>
+                                            <Text variant="body-1">Процессор: {vm.cpu_cores} ядра</Text>
+                                            <Text variant="body-1">Оперативная память: {vm.memory_gb} ГБ</Text>
+                                        </div>
+                                        <Button
+                                            onClick={() => {
+                                                console.log("Открываем модальное окно для:", vm.name); // Лог проверки
+                                                setOpen(true);
+                                                setCurrentMachine(vm); // Устанавливаем текущую ВМ
+                                            }}
+                                            className="card-edit"
+                                            view="action"
+                                            width="max"
+                                            size="l"
                                         >
-                                            {isTurnedOn[index] ? "Включена" : "Выключена"}
-                                        </Text>
-                                    </Text>
-                                </div>
-                                <Button
-                                    onClick={() => {
-                                        setOpen(true);
-                                        setCurrentMachine(index);
-                                    }}
-                                    className="card-edit"
-                                    view="action"
-                                    width="max"
-                                    size="l"
-                                >
-                                    <Text variant="body-2">Управление</Text>
-                                </Button>
+                                            Управление
+                                        </Button>
+                                    </div>
+                                </Card>
                             </div>
-                        </Card>
-                    </div>
-                ))}
-            </div>
+                        ))
+                    )}
+                </div>
+            )}
 
+            {/* Модальное окно для управления ВМ */}
             <Modal open={open} onClose={() => setOpen(false)}>
-                {currentMachine !== null && (
+                {currentMachine && (
                     <div className="modal-edit">
-                        <Text variant="header-1">Управление</Text>
-                        <div className="modal-script">
-                            <Text variant="body-2">Добавить скрипт</Text>
-                            <Select
-                                multiple={true}
-                                size="m"
-                                placeholder="Выберите нужные скрипты"
-                                width={250}
-                            >
-                                <Select.Option value="1">Создать пользователя</Select.Option>
-                                <Select.Option value="2">Сделать что-то</Select.Option>
-                                <Select.Option value="3">Пожарить баребух</Select.Option>
-                                <Select.Option value="4">Создать что-то</Select.Option>
-                            </Select>
-                        </div>
-                        <div className="modal-script">
+                        <Text variant="header-1">Управление виртуальной машиной</Text>
+                        <Text variant="body-1" style={{ marginBottom: "10px" }}>
+                            Вы управляете машиной: <strong>{currentMachine.name}</strong>
+                        </Text>
+                        <Text variant="body-1">ID машины: {currentMachine.id}</Text>
+                        <div style={{ marginTop: "20px" }}>
                             <Button
-                                className="card-edit"
-                                view="action"
-                                width="max"
-                                size="l"
+                                view="positive"
+                                onClick={() => {
+                                    console.log(`Сохранено для машины: ${currentMachine.name}`);
+                                    setOpen(false);
+                                }}
+                                style={{ marginRight: "10px" }}
                             >
-                                <Text variant="body-2">Сохранить</Text>
+                                Сохранить
                             </Button>
                             <Button
-                                className="card-edit"
-                                view={isTurnedOn[currentMachine] ? "outlined-danger" : "outlined-success"}
-                                width="max"
-                                size="l"
-                                onClick={() => handleToggle(currentMachine)}
+                                view="negative"
+                                onClick={() => {
+                                    console.log(`Выключение машины: ${currentMachine.name}`);
+                                    setOpen(false);
+                                }}
                             >
-                                <Text variant="body-2">
-                                    {isTurnedOn[currentMachine] ? "Выключить" : "Включить"}
-                                </Text>
+                                Выключить
                             </Button>
                         </div>
                     </div>

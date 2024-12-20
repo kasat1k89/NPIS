@@ -1,8 +1,16 @@
 from typing import Optional
+import os
+from fastapi.responses import JSONResponse
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from tf_generator import run_terraform
 from fastapi.middleware.cors import CORSMiddleware
+from zvirt_client import get_vms
+from f import format_vms
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -34,3 +42,33 @@ async def create_vm(config: VMConfig):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/vms/")
+async def list_vms():
+    try:
+        # Запускаем get_vms, которая внутри себя запустит Ansible playbook
+        # и вернёт сформированный JSON
+        formatted_vms = get_vms(playbook_path="ansible/test.yml", output_path="json/vms_formatted.json")
+        return formatted_vms
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/vms/raw/")
+async def get_vms_raw():
+    try:
+        # Указываем путь к JSON-файлу
+        output_path = "json/vms_formatted.json"
+        
+        # Проверяем наличие файла
+        if not os.path.exists(output_path):
+            raise FileNotFoundError(f"Файл {output_path} не найден.")
+        
+        # Считываем данные из файла
+        with open(output_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        
+        # Возвращаем содержимое файла как JSON
+        return JSONResponse(content=data)
+    except Exception as e:
+        print(f"Ошибка в get_vms_raw: {e}")
+        raise HTTPException(status_code=500, detail="Ошибка при чтении данных")
