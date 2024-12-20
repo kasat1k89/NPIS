@@ -19,7 +19,7 @@ const Create = () => {
         "Ubuntu Server": { template_id: "31f5b1f2-5d26-4de6-80a4-53f9477a428a" },
         "Windows 10": { template_id: "354e5d36-b733-4ca8-a385-5b1d655ea407" },
         "Debian 12": { template_id: "3b749f0a-2781-4eb4-82ec-2d4b5e8f1655" },
-        "Astra": { template_id: "3b749f0a-2781-4eb4-82ec-2d4b5e8f1655" },
+        "Astra": { template_id: "c047ebd7-744a-4a3f-b9a0-633660d58c48" },
         "Windows Server": {template_id: "f77b7ea6-f51f-4cb9-89e5-7230ff7c1ab3"},
         "Blank": {template_id: "00000000-0000-0000-0000-000000000000"},
     };
