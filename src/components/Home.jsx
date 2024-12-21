@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Card, Modal, Button, Icon, Select } from '@gravity-ui/uikit';
+import { Text, Card, Modal, Button, Icon, Select, Loader } from '@gravity-ui/uikit';
 import { WindowsIcon, UbuntuIcon, DebianIcon, AstraIcon } from "./Icons";
 import './User.css'; // здесь, к примеру, можно прописать стили для modal-edit, modal-script, и т.д.
 
@@ -74,14 +74,20 @@ const Home = () => {
 
     return (
         <div className="home">
-            <Text variant="header-2">Виртуальные машины</Text>
+            <Text variant="display-1">Виртуальные машины</Text>
 
             {loading ? (
-                <Text variant="body-1">Загрузка данных...</Text>
+                <div className="loader">
+                    <Loader size="l" />
+                </div>
+                
             ) : (
                 <div className="card-container">
                     {vms.length === 0 ? (
-                        <Text variant="body-1">Нет доступных виртуальных машин.</Text>
+                        <div className="loader">
+                            <Text variant="display-2">Нет доступных виртуальных машин.</Text>
+                        </div>
+                        
                     ) : (
                         vms.map((vm) => (
                             <div key={vm.id} className="card">
@@ -102,11 +108,23 @@ const Home = () => {
                                     <div className="card-text">
                                         <Text variant="header-1">{vm.name}</Text>
                                         <div className="card-params">
-                                            <Text variant="body-1">ID: {vm.id}</Text>
-                                            <Text variant="body-1">ОС: {vm.os_type}</Text>
-                                            <Text variant="body-1">CPU: {vm.cpu_cores} ядра</Text>
-                                            <Text variant="body-1">RAM: {vm.memory_gb} ГБ</Text>
+                                            
+                                            <Text variant="body-1">Операционная система: {vm.os_type}</Text>
+                                            <Text variant="body-1">Процессор: {vm.cpu_cores} ядра</Text>
+                                            <Text variant="body-1">Оперативная память: {vm.memory_gb} ГБ</Text>
+                                            <Text variant="body-1">
+                                                Состояние:&nbsp;
+                                                <Text
+                                                    variant="body-1"
+                                                    color="positive"
+                                                    
+                                                >
+                                                    Включена
+                                                </Text>
+                                            </Text>
                                         </div>
+                                    </div>
+                                    <div className="buttons">
                                         <Button
                                             onClick={() => {
                                                 console.log("Открываем модальное окно для:", vm.name);
@@ -114,11 +132,19 @@ const Home = () => {
                                                 setCurrentMachine(vm);
                                             }}
                                             className="card-edit"
-                                            view="action"
+                                            view="outlined"
                                             width="max"
                                             size="l"
                                         >
-                                            Управление
+                                            <Text variant="body-2">Управление</Text>
+                                        </Button>
+                                        <Button
+                                            className="card-edit"
+                                            view="outlined"
+                                            width="max"
+                                            size="l"
+                                        >
+                                            <Text variant="body-2">Консоль</Text>
                                         </Button>
                                     </div>
                                 </Card>
@@ -133,7 +159,7 @@ const Home = () => {
                 open={open}
                 onClose={() => setOpen(false)}
                 // Можно добавить стиль, чтобы модальное окно не было слишком узким:
-                style={{ minWidth: '400px' }}
+                
             >
                 {currentMachine !== null && (
                     <div className="modal-edit">
@@ -158,7 +184,7 @@ const Home = () => {
                             >
                                 <Select.Option value="1">Создать пользователя</Select.Option>
                                 <Select.Option value="2">Сделать что-то</Select.Option>
-                                <Select.Option value="3">Пожарить баребух</Select.Option>
+                                <Select.Option value="3">Установить приложение</Select.Option>
                                 <Select.Option value="4">Создать что-то</Select.Option>
                             </Select>
                         </div>

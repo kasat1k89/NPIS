@@ -1,5 +1,5 @@
 import React from "react";
-import {UserLabel, DropdownMenu} from '@gravity-ui/uikit';
+import {UserLabel} from '@gravity-ui/uikit';
 
 
 const ProfileBtn = () => {

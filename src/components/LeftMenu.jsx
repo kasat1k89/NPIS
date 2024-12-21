@@ -21,11 +21,11 @@ const LeftMenu = ({ isActive, isCollapsed, sidebarRef, selectedComponent, onMenu
         >
             <ul className="list">
                 <li className="list-item">
-                    <Tooltip content="Главная" placement={"right"} openDelay={300}>
+                    <Tooltip content="Главная" placement={"right"} disabled={!isCollapsed} openDelay={300}>
                     <Button
                         view="flat"
                         width="max"
-                        style={{justifyContent: "left"}}
+                        className="button"
                         size="l"
                         selected={selectedComponent === "home"}
                         onClick={() => onMenuClick("home")}
@@ -37,11 +37,11 @@ const LeftMenu = ({ isActive, isCollapsed, sidebarRef, selectedComponent, onMenu
                     
                 </li>
                 <li className="list-item">
-                    <Tooltip content="Создать ВМ" placement={"right"} openDelay={300}>
+                    <Tooltip content="Создать ВМ" placement={"right"} disabled={!isCollapsed} openDelay={300}>
                     <Button
                         view="flat"
                         width="max"
-                        style={{justifyContent: "left"}}
+                        className="button"
                         size="l"
                         selected={selectedComponent === "create"}
                         onClick={() => onMenuClick("create")}
@@ -52,11 +52,11 @@ const LeftMenu = ({ isActive, isCollapsed, sidebarRef, selectedComponent, onMenu
                     </Tooltip>
                 </li>
                 <li className="list-item">
-                    <Tooltip content="Настройки" placement={"right"} openDelay={300}>
+                    <Tooltip content="Настройки" placement={"right"} disabled={!isCollapsed} openDelay={300}>
                     <Button
                         view="flat"
                         width="max"
-                        style={{justifyContent: "left"}}
+                        className="button"
                         size="l"
                         selected={selectedComponent === "settings"}
                         onClick={() => onMenuClick("settings")}
@@ -67,11 +67,11 @@ const LeftMenu = ({ isActive, isCollapsed, sidebarRef, selectedComponent, onMenu
                     </Tooltip>
                 </li>
                 <li className="list-item">
-                    <Tooltip content="Выход" placement={"right"} openDelay={300}>
+                    <Tooltip content="Выход" placement={"right"} disabled={!isCollapsed} openDelay={300}>
                     <Button
                         view="flat"
                         width="max"
-                        style={{justifyContent: "left"}}
+                        className="button"
                         size="l"
                         selected={selectedComponent === "exit"}
                         onClick={handleLogout}

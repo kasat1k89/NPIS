@@ -6,13 +6,5 @@
         "name": "ubuntu",
         "os_type": "ubuntu_18_04",
         "status": "up"
-    },
-    {
-        "cpu_cores": 1,
-        "id": "48d46b00-d32c-4d14-9e17-fb229617a5fd",
-        "memory_gb": 4.0,
-        "name": "win10",
-        "os_type": "windows_10",
-        "status": "up"
     }
 ]

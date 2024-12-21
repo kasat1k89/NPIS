@@ -4,8 +4,8 @@
   gather_facts: false
 
   vars:
-    raw_output_path: "/home/morozovms/NPIS/backend/json/vms_raw.json"
-    formatted_output_path: "/home/morozovms/NPIS/backend/json/vms_formatted.json"
+    raw_output_path: "/NPIS/backend/json/vms_raw.json"
+    formatted_output_path: "/NPIS/backend/json/vms_formatted.json"
 
   tasks:
     - name: Аутентификация в oVirt
@@ -13,7 +13,7 @@
         url: "https://zvirt-cluster.acid-tech.ru/ovirt-engine/api"
         username: "admin@zvirt@internal"
         password: "P@ssw0rd"
-        ca_file: "/home/morozovms/NPIS/backend/pki-resource.crt"
+        ca_file: "/NPIS/backend/pki-resource.crt"
       register: ovirt_auth
 
     - name: Получение информации о созданных виртуальных машинах
@@ -22,7 +22,7 @@
           url: "https://zvirt-cluster.acid-tech.ru/ovirt-engine/api"
           username: "admin@zvirt@internal"
           password: "P@ssw0rd"
-          ca_file: "/home/morozovms/NPIS/backend/pki-resource.crt"
+          ca_file: "/NPIS/backend/pki-resource.crt"
       register: vm_info
 
     - name: Сохранение сырых данных ВМ в JSON
@@ -60,4 +60,4 @@
           url: "https://zvirt-cluster.acid-tech.ru/ovirt-engine/api"
           username: "admin@zvirt@internal"
           password: "P@ssw0rd"
-          ca_file: "/home/morozovms/NPIS/backend/pki-resource.crt"
+          ca_file: "/NPIS/backend/pki-resource.crt"

@@ -34,5 +34,13 @@
     margin-left: 10px;
 }
 
+.sidebar.collapsed .button {
+    justify-content: center;
+}
+
+.sidebar .button {
+    justify-content: left;
+}
+
 
 

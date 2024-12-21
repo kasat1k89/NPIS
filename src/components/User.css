@@ -18,7 +18,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    width: 45%;
+    width: 550px;
 }
 
 .card-container {
@@ -61,7 +61,7 @@
 }
 
 .card-text {
-    padding-left: 30px;
+    padding-left: 20px;
     padding-right: 30px;
     margin-top: 20px;
     width: 100%;
@@ -79,8 +79,8 @@
 }
 
 .modal-edit {
-    width: 60vh;
-    height: 30vh;
+    width: 500px;
+    height: 320px;
     padding-top: 30px;
     display: flex;
     justify-content: flex-start;
@@ -93,4 +93,18 @@
     gap: 20px;
     align-items: center;
     padding-top: 30px;
+}
+
+.buttons {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 23px;
+    gap: 15px;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 200px;
 }

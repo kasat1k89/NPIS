@@ -1,4 +1,4 @@
-#!/home/morozovms/NPIS/venv/bin/python3
+#!/NPIS/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

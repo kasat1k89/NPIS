@@ -68,7 +68,7 @@ const Create = () => {
 
     return (
         <div className="create">
-            <Text variant="header-2">Создание ВМ</Text>
+            <Text variant="display-1">Создание ВМ</Text>
 
             <div className="option">
                 <Text variant="body-2">Название</Text>
