@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, Card, Modal, Button, Icon, Select, Loader } from '@gravity-ui/uikit';
 import { WindowsIcon, UbuntuIcon, DebianIcon, AstraIcon } from "./Icons";
-import './User.css'; // здесь, к примеру, можно прописать стили для modal-edit, modal-script, и т.д.
+import './User.css';
 
 const Home = () => {
     const [vms, setVms] = useState([]);          // Список виртуальных машин
@@ -51,14 +51,6 @@ const Home = () => {
             console.log("Обновленные данные из /vms:", updatedData);
             setVms(updatedData); // Обновляем состояние
 
-            // При первой загрузке можно инициализировать все машины «выключенными» (или включенными),
-            // если в вашей логике есть необходимость. Например:
-            // const initIsTurnedOn = {};
-            // updatedData.forEach((vm) => {
-            //     initIsTurnedOn[vm.id] = false; 
-            // });
-            // setIsTurnedOn(initIsTurnedOn);
-
         } catch (error) {
             console.error("Ошибка при загрузке данных ВМ:", error);
         } finally {
@@ -84,8 +76,8 @@ const Home = () => {
             ) : (
                 <div className="card-container">
                     {vms.length === 0 ? (
-                        <div className="loader">
-                            <Text variant="display-2">Нет доступных виртуальных машин.</Text>
+                        <div className="none">
+                            <Text variant="display-1">Нет доступных виртуальных машин</Text>
                         </div>
                         
                     ) : (
